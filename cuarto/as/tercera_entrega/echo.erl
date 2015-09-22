@@ -5,7 +5,8 @@
 %%Funcion para la creacion del proceso y su registro
 start() ->
     Pid = spawn(?MODULE, init, []),
-    register(server, Pid).
+    register(server, Pid),
+    ok.
 
 %%Funcion que inicia el loop pasando una lista vacia
 init() ->
