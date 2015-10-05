@@ -15,6 +15,7 @@ reverse([], Acum) -> Acum.
 
 %%Concatenacion
 %%Se usa la funcion reverse ya que la recursion invierte la lista inicial
+%% @doc realizado un cambio en esta funcion para que solo concatenase el primer nivel de listas
 concatenate(Lista) ->
   concatenate(Lista, [], []).
 
@@ -25,14 +26,10 @@ concatenate(Lista) ->
 %concatenate([H|T], Acum) -> concatenate(T, [H|Acum]);
 %concatenate([], Acum) -> Acum.
 
-
-%%Recursiva desde cola
-concatenate([H|T],Cola, Acum) when is_list(H) ->    
-    concatenate(H, [T|Cola], Acum);
-concatenate([H|T], Cola, Acum) ->
-    concatenate(T, Cola, [H|Acum]);
-concatenate([], [H|T], Acum) ->
-    concatenate(H, T, Acum);
+concatenate([H|T],[], Acum) when is_list(H) ->
+    concatenate(T, H, Acum);
+concatenate(Lista, [H|T], Acum) ->
+    concatenate(Lista, T, [H|Acum]);
 concatenate([],[],Acum) -> reverse(Acum).
 
 

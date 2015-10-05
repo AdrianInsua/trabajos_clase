@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+<title>echo.COVER.html</title>
+</head><body style='background-color: white; color: black'>
+<pre>
+File generated from /home/suampa/Documentos/trabajos_clase/cuarto/as/tercera_entrega/echo.erl by COVER 2015-10-02 at 22:00:09
+
+****************************************************************************
+
+        |  -module(echo).
+        |  -export([start/0, stop/0, print/1]).
+        |  -export([init/0]).
+        |  
+        |  %%Funcion para la creacion del proceso y su registro
+        |  start() -&gt;
+     3..|      Pid = spawn(?MODULE, init, []),
+     3..|      register(server, Pid),
+     3..|      ok.
+        |  
+        |  %%Funcion que inicia el loop pasando una lista vacia
+        |  init() -&gt;
+     3..|      loop().
+        |  
+        |  
+        |  stop() -&gt;
+     2..|      server ! {stop, self()},
+     2..|      receive
+     2..|          {ok, server} -&gt; ok
+        |      end.
+        |  
+        |  print(Term) -&gt;
+     1..|      server ! {print, Term, self()},
+     1..|      receive
+     1..|          {ok, server} -&gt; ok
+        |      end.
+        |  
+        |  loop() -&gt;
+     4..|      receive
+        |          {stop, From} -&gt;
+     2..|              From ! {ok, server};
+        |          {print, Term, From} -&gt;
+     1..|              io:format("~s~n", [Term]),
+     1..|              From ! {ok, server},
+     1..|              loop()
+        |      end.
+        |  
+        |  
+</pre>
+</body>
+</html>

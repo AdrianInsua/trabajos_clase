@@ -1,0 +1,4 @@
+%% encoding: UTF-8
+{packages,[]}.
+{modules,[boolean,boolean_tests,create,create_tests,effects,manipulating,
+          manipulating_tests]}.

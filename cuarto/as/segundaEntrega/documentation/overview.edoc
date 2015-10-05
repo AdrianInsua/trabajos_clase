@@ -1,0 +1,6 @@
+@author Adrian Insua Yañez
+@copyright 2015
+@version 1.0
+@title tests de la segunda entrega
+@doc Pruebas sobre el modulo db y sorting realizadas, ha sido necesario un cambio en la funcion
+delete del modulo db ya que devolvia listas anidadas, en lugar de la lista propia de la db

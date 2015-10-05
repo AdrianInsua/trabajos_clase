@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+<title>create.COVER.html</title>
+</head><body style='background-color: white; color: black'>
+<pre>
+File generated from /home/suampa/Documentos/trabajos_clase/cuarto/as/primera_entrega/create.erl by COVER 2015-10-02 at 15:34:05
+
+****************************************************************************
+
+        |  -module(create).
+        |  -export([create/1, reverse_create/1]).
+        |  
+        |  %%Creación normal
+        |  create(Valor) -&gt;
+     5..|      create(Valor, []).
+        |  
+        |  %%Funcion tail_recursive
+        |  create(Valor, List) when Valor &gt; 0 -&gt;
+    17..|      create(Valor-1, [Valor|List]);
+     5..|  create(0, List) -&gt; List.
+        |  
+        |  %%Creacion invertida
+        |  reverse_create(Valor) -&gt;
+     5..|      reverse_create(Valor, 1, []).
+        |  
+        |  %funcion recursiva normal, acumula operaciones
+        |  %reverse_create(Valor) when Valor &gt; 0 -&gt;
+        |  %    [Valor|reverse_create(Valor-1)];
+        |  %reverse_create(0) -&gt; [].
+        |  
+        |  %%Funcion tail_recusive
+        |  reverse_create(Valor, N, List) when N =&lt; Valor -&gt;
+    17..|      reverse_create(Valor, N+1, [N|List]);
+     5..|  reverse_create(_, _, List) -&gt; List.
+</pre>
+</body>
+</html>

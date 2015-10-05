@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+<title>sorting.COVER.html</title>
+</head><body style='background-color: white; color: black'>
+<pre>
+File generated from /home/suampa/Documentos/trabajos_clase/cuarto/as/segundaEntrega/sorting.erl by COVER 2015-10-02 at 21:56:15
+
+****************************************************************************
+
+        |  -module(sorting).
+        |  -export([quicksort/1, mergesort/1]).
+        |  
+     7..|  quicksort([]) -&gt; [];
+        |  quicksort([H|T]) -&gt;
+     4..|      quicksort([X|| X&lt;-T, X &lt; H]) ++ [H]++ quicksort([X|| X&lt;-T, X &gt;= H]).
+        |  
+     1..|  mergesort([]) -&gt; [];
+     4..|  mergesort([H]) -&gt; [H];
+        |  mergesort(List) -&gt;
+     2..|      {List1,List2} =  lists:split(length(List) div 2, List),
+     2..|      merge(mergesort(List1),mergesort(List2)).
+        |  
+        |  merge([], List) -&gt;
+     1..|      List;
+        |  merge(List, []) -&gt;
+     1..|      List;
+        |  merge([H1|T1],[H2|T2]) -&gt;
+     2..|      if
+     1..|          H1 =&lt; H2 -&gt; [H1| merge(T1, [H2|T2])];
+     1..|          true -&gt; [H2 | merge([H1|T1], T2)]
+        |      end.
+</pre>
+</body>
+</html>
