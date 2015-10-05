@@ -1,5 +1,0 @@
-@author Adrian Insua Yañez
-@copyright 2015
-@version 1.0
-@title tests de la primera entrega
-@doc Se ha realizado un cambio en el modulo manipulating, ya que la función concatenate realizaba el mismo trabajo que la funcion flatten

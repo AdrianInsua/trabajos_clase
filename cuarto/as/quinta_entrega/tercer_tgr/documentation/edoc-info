@@ -1,3 +1,0 @@
-%% encoding: UTF-8
-{packages,[]}.
-{modules,[echo,echo_tests,traces]}.
