@@ -17,11 +17,11 @@ public class QuadTree {
     /**
      * @param args the command line arguments
      *  -f = direccion del archivo con la matriz de datos
-     *  -p = imprime por pantalla la imagen
-     *  -c = codificacion
-     *  -pa = imprime el arbol codificado
-     *  -d = decodifica el arbol obtenido
-     *  -pd = imprime el arbol decodificado
+        *  -p = imprime por pantalla la imagen
+        *  -c = codificacion
+        *  -pa = imprime el arbol codificado
+        *  -d = decodifica el arbol obtenido
+        *  -pd = imprime el arbol decodificado
      */
     public static void main(String[] args) throws IOException {
         //Declaración de variables
@@ -34,6 +34,8 @@ public class QuadTree {
         ArrayList<Nodo> hijos = null; 
         //array auxiliar para guardar los hijos del nodo analizado
         ArrayList<Nodo> nuevosHijos = new ArrayList<Nodo>(); 
+        //array auxiliar para decodificacion
+        char deco[][];
         
         //Analisis de las opciones de ejecución
         for (int i = 0; i < args.length; i++) {
@@ -124,9 +126,7 @@ public class QuadTree {
         */
         
         if(d){
-            if(codificacion.isEmpty())
-                codificacion = quadTree.imprimir();
-            
+            deco = quadTree.decodificar();
         }
     }
     
