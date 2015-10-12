@@ -1,0 +1,5 @@
+@author Adrian Insua
+@copyright 2015
+@version 1.0
+@title Sexta entrega
+@doc This module creates a ring which is useful to try distributed coding and error handling in Erlang.<br/>
