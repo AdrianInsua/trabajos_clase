@@ -1,0 +1,7 @@
+
+%% -*- coding: utf-8 -*-
+@author Adrian Insua Yañez y Aaron Montero
+@copyright 2015
+@version 1.0
+@title Practica Quadtree
+@doc Adaptación del Quadtree de Java a Erlang

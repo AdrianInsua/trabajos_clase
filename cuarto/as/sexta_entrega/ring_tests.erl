@@ -1,3 +1,4 @@
+%% -*- coding: utf-8 -*-
 %% @author Adrian Insua Yañez
 %% @copyright 2015
 %% @version 1.0
@@ -16,7 +17,7 @@ ring_test_() ->
             ?_test(start_fallo()),
             ?_test(get_proc()),
             ?_test(msg()),
-%%            ?_test(code_swap()),
+            %%?_test(code_swap()), %%Comentado ya que hace que falle el cover
             ?_test(msg_kill()),
             ?_test(kill_first())
          ]}
@@ -89,7 +90,6 @@ kill_first() ->
     P2 = ring:get_process(1),
     ?assertNotEqual(P1,P2).
 
-%% @doc test function to try the code swapping feature
 %%code_swap() ->
 %%    Tracer = spawn(fun tracer/0),
 %%    P1 = ring:get_process(1),
@@ -102,9 +102,11 @@ kill_first() ->
 %%    Tracer ! {collect, self()},
 %%        receive {Traces, Tracer} -> Traces end,
 %%        io:format("~w~n",[Traces]),
+%%        PrintTracesSendAnt = [ print_trace || {trace,Who,send,{msg,_},_} <- Traces, (Who == P1)],
 %%        PrintTracesSend = [ print_trace || {trace,Who,send,{_,msg},_} <- Traces, (Who == P1)],
-%%        ?assertEqual(2, length(PrintTracesSend)).
-    
+%%        ?assertEqual(1, length(PrintTracesSendAnt)),
+%%        ?assertEqual(1, length(PrintTracesSend)).
+%%  
 %%code_change() ->
 %%    os:cmd("./cambio.sh"),
 %%    code:purge(ring),
@@ -117,6 +119,13 @@ get_proc() ->
     P4 = ring:get_process(4),
     ?assertNotEqual(P1, error),
     ?assertEqual(P4, error).
+
+stop_test() ->
+    ring:start(3),
+    timer:sleep(50),
+    ring:stop(),
+    timer:sleep(50),
+    ?assertEqual(whereis(head), undefined).
 
 %% internal tracing functions.
 tracer() ->

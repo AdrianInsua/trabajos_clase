@@ -1,16 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>ring.COVER.html</title>
 </head><body style='background-color: white; color: black'>
 <pre>
-File generated from /home/suampa/Documentos/trabajos_clase/cuarto/as/sexta_entrega/ring.erl by COVER 2015-10-13 at 00:45:19
+File generated from /home/suampa/Documentos/trabajos_clase/cuarto/as/sexta_entrega/ring.erl by COVER 2015-10-13 at 20:01:49
 
 ****************************************************************************
 
+        |  %% -*- coding: utf-8 -*-
         |  %% @author Adrian Insua
-        |  %% @version 1.0
+        |  %% @version 1.
         |  %% @doc This module creates a ring which is useful to try distributed coding and error handling in Erlang.&lt;br/&gt;
         |  %% A 'head' process is created and it handles the creation and comunication with the ring's processes.
         |  %%
@@ -18,75 +19,72 @@ File generated from /home/suampa/Documentos/trabajos_clase/cuarto/as/sexta_entre
         |  %%
         |  %% This module monitorizes 'EXIT' signals travelling through ring. If we find one of these signals we try to repair the ring changing the deprecated pointers.
         |  -module(ring).
-        |  -export([start/1, start/2, msg/2, msg/3, stop/0,stop/1, get_process/1, head_proc/1, link_proc/1]).
+        |  -export([start/1, start/2, msg/2, msg/3, stop/0, stop/1, head_proc/1, link_proc/1]).
+        |  -export([head/0]).
+        |  -export([get_process/1]).
         |  
         |  %% @doc with args: NumProc, Node. Sends a create signal to Node, so the node will create NumProc processes.
         |  %% @spec start(integer(),node()) -&gt; any()
+     1..|  start(0,_) -&gt; {error, invalid_argument};
         |  start(NumProc,Node) -&gt;
-<font color=red>     0..|      spawn(Node, fun head_proc/0),</font>
-<font color=red>     0..|      {head, Node} ! {spawn, NumProc},</font>
-<font color=red>     0..|      ok.</font>
+     1..|      Pid = spawn(Node, ?MODULE, head, []),
+     1..|      io:format("~w~n",[Pid]),
+     1..|      Pid ! {spawn, NumProc},
+     1..|      ok.
         |  
         |  %% @doc with arg: NumProc. This function creates NumProc processes connected between them in a ring topology.
         |  %% @spec start(integer()) -&gt; atom()
         |  start(NumProc) when NumProc &gt; 0 -&gt;
-     1..|      Pid = spawn(fun head_proc/0),
-     1..|      Pid ! {spawn, NumProc},
-     1..|      ok;
+     2..|      Pid = spawn(?MODULE, head, []),
+     2..|      Pid ! {spawn, NumProc},
+     2..|      ok;
         |  start(0) -&gt; 
      1..|      {error, invalid_argument}.
         |  
         |  %% @doc with args: MsgNum, Message, Node. Send a message signal to the specificated Node and it sends through his ring the Message for MsgNum times.
         |  %% @spec msg(integer(),any(),node()) -&gt; iodata()
         |  msg(MsgNum, Message, Node) -&gt;
-<font color=red>     0..|      {head, Node} ! update,</font>
-<font color=red>     0..|      {head, Node} ! {msg, Message, MsgNum}.</font>
+     1..|      {head, Node} ! {msg, Message, MsgNum}.
         |  
         |  %% @doc with args: MsgNum, Message. Sends to the ring Message for MsgNum times.
         |  %% @spec msg(integer(),any()) -&gt; iodata()
         |  msg(MsgNum, Message) -&gt;
-     2..|      head ! update,
      2..|      head ! {msg, Message, MsgNum}.
         |  
         |  %% @doc with arg: Node. Sends to the specified Node the stop signal.
         |  %% @spec stop(node()) -&gt; any()
         |  stop(Node) -&gt;
-<font color=red>     0..|      {head, Node} ! update,</font>
-<font color=red>     0..|      {head, Node} ! stop.   </font>
+     1..|      {head, Node} ! stop.   
         |  
         |  %% @doc without args. Sends the stop signal to the ring.
         |  stop() -&gt;
-     1..|      head ! update,
-     1..|      head ! stop.
+     2..|      head ! stop.
         |  
         |  %% @doc with arg: NProcess. Auxiliar function which returns the NProcess-th Pid of the ring.
         |  %% @spec get_process(integer()) -&gt; [pid()|iodata()]
         |  get_process(NProcess) -&gt;
-    11..|      head ! update,
     11..|      head ! {getProc, NProcess, self()},
     11..|      receive
      1..|          {res, error} -&gt; io:format("We can't find any process~n"), error;
     10..|          {res, Pid} -&gt; Pid
         |      end.
         |  
-        |  head_proc() -&gt;
-     1..|      register(head, self()),
-     1..|      process_flag(trap_exit, true), %%monitorize 'EXIT' signals coming from any ring's process
-     1..|      head_proc([]).
+        |  head() -&gt;
+     2..|      register(head, self()),
+     2..|      process_flag(trap_exit, true), %%monitorize 'EXIT' signals coming from any ring's process
+     2..|      head_proc([]).
         |  
         |  %% @hidden it is an internal function
         |  head_proc(Anillo) -&gt;
-    33..|      process_flag(trap_exit, true),
-    33..|      receive
-        |          update -&gt; %%Auxiliar function to handle the hot code swapping
-    14..|              ?MODULE:head_proc(Anillo);
+    23..|      process_flag(trap_exit, true),
+    23..|      receive
         |          {spawn, N} -&gt;
-     1..|              Prim = spawn_link(?MODULE, link_proc, [nil]),
-     1..|              register(anillo, Prim),
-     1..|              spawn_proc(N-1, Prim, self()),
-     1..|              ?MODULE:head_proc([Prim|Anillo]);
+     2..|              Prim = spawn_link(?MODULE, link_proc, [nil]),
+     2..|              register(anillo, Prim),
+     2..|              spawn_proc(N-1, Prim, self()),
+     2..|              ?MODULE:head_proc([Prim|Anillo]);
         |          {reg, Proc} -&gt;
-     2..|              ?MODULE:head_proc([Proc|Anillo]);
+     4..|              ?MODULE:head_proc([Proc|Anillo]);
         |          {msg, Mensaje, Num} -&gt;
      2..|              send_msg(Mensaje, Num),
      2..|              ?MODULE:head_proc(Anillo);
@@ -101,24 +99,21 @@ File generated from /home/suampa/Documentos/trabajos_clase/cuarto/as/sexta_entre
         |          {'EXIT', Pid, Reason} -&gt;
      2..|              io:format("Process ~w closed by error: ~w~nWe are fixing ring....~n", [Pid,Reason]),
      2..|              AnilloNuevo = fix(lists:reverse(Anillo), Pid, nil, []),
-     2..|              ?MODULE:head_proc(AnilloNuevo);
+     2..|              if
+<font color=red>     0..|                  length(AnilloNuevo) =:= 0 -&gt; unregister(head), exit(self(),ok);</font>
+     2..|                  true -&gt; ?MODULE:head_proc(AnilloNuevo)
+        |              end;
         |          stop -&gt;
-     1..|              stopAux(),
-     1..|              unregister(head),
-     1..|              exit(self(), ok)
+     2..|              stopAux(),
+     2..|              unregister(head),
+     2..|              exit(self(), ok)
         |      end.
         |  
         |  %% @hidden it is an internal function
         |  link_proc(Next) -&gt;
-    27..|      receive
-        |          update -&gt;
-    10..|              if
-     6..|                  (Next =/= anillo) -&gt; Next ! update,
-     6..|                  ?MODULE:link_proc(Next);
-     4..|                  true -&gt; ?MODULE:link_proc(Next)
-        |              end;
+    23..|      receive
         |          {reg, Pid} -&gt;
-     4..|              ?MODULE:link_proc(Pid);
+     7..|              ?MODULE:link_proc(Pid);
         |          {msg, Msg} -&gt;
     10..|              io:fwrite("~w mensaje a: ~w Siguiente: ~w ~n", [self(),Msg, Next]),
     10..|              if
@@ -126,38 +121,34 @@ File generated from /home/suampa/Documentos/trabajos_clase/cuarto/as/sexta_entre
      6..|                      ?MODULE:link_proc(Next);
      4..|                  true -&gt; ?MODULE:link_proc(Next)
         |              end;
-        |          {stop} -&gt;
-     1..|              unlink(self()),
-     1..|              if
+        |          stop -&gt;
+     4..|              unlink(self()),
+     4..|              if
         |                  (Next =/= anillo) -&gt;
-<font color=red>     0..|                      Next ! {stop},</font>
-<font color=red>     0..|                      exit(self(), ok);</font>
+     2..|                      Next ! stop,
+     2..|                      exit(self(), ok);
         |                  true -&gt; 
-     1..|                      exit(self(),ok)
+     2..|                      exit(self(),ok)
         |              end
         |      end.
         |  
         |  spawn_proc(0, Prev,_) -&gt; 
-     1..|      Prev ! {reg, anillo};
+     2..|      Prev ! {reg, anillo};
         |  spawn_proc(N, Prev, From) -&gt; 
-     2..|      Pid = spawn_link(?MODULE, link_proc, [nil]),
-     2..|      Prev ! {reg, Pid},
-     2..|      From ! {reg, Pid},
-     2..|      spawn_proc(N-1, Pid, From).
+     4..|      Pid = spawn_link(?MODULE, link_proc, [nil]),
+     4..|      Prev ! {reg, Pid},
+     4..|      From ! {reg, Pid},
+     4..|      spawn_proc(N-1, Pid, From).
         |  
      2..|  send_msg(_, 0) -&gt; ok;
         |  send_msg(Msg, Num) -&gt;
-     4..|      anillo ! update,
      4..|      anillo ! {msg, Msg},
      4..|      send_msg(Msg, Num-1).
         |  
+<font color=red>     0..|  fix([], _, _, _) -&gt; [];</font>
         |  fix([Pid,H|[]], Pid, nil, _) -&gt; %%this option is for the cases with only 2 ring elements
      1..|      register(anillo,H),
      1..|      [H];
-        |  fix([Pid, H |T], Pid, nil, _) -&gt; %% This part of the function takes care of the deletion of ring's head
-<font color=red>     0..|      register(anillo, H), %%new ring's head, which is the next element.</font>
-<font color=red>     0..|      lists:last(T) ! {reg,H}, %% connects the last element of the ring with the new head element</font>
-<font color=red>     0..|      lists:reverse([H|T]);  %% returns the new list, after reverse it.</font>
         |  fix([Pid,H|T], Pid, Ant, Acum) -&gt;
      1..|      Ant ! {reg, H},
      1..|      Aux = lists:reverse([H|T]),
@@ -167,8 +158,8 @@ File generated from /home/suampa/Documentos/trabajos_clase/cuarto/as/sexta_entre
      1..|      fix(T, Pid, H, [H|Acum]).
         |  
         |  stopAux() -&gt;
-     1..|      anillo ! {stop},
-     1..|      unregister(anillo).
+     2..|      anillo ! stop,
+     2..|      unregister(anillo).
         |  
 </pre>
 </body>

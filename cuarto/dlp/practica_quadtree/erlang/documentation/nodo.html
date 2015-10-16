@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Module nodo</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module nodo</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>Este modulo es una emulacion de la clase Nodo.
+
+<p><b>Version:</b> 1.</p>
+<p><b>Authors:</b> Adrian Insua y Aaron Montero.</p>
+
+<h2><a name="description">Description</a></h2>Este modulo es una emulacion de la clase Nodo
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#analizar-1">analizar/1</a></td><td>Metodo de la clase nodo, que realiza la subdivisión en cuadrantes.</td></tr>
+<tr><td valign="top"><a href="#descodificar-1">descodificar/1</a></td><td>Metodo de la clase nodo que devuelve un array con el arbol descodificado.</td></tr>
+<tr><td valign="top"><a href="#getDatos-1">getDatos/1</a></td><td>Getter del valor de los datos del nodo Nodo.</td></tr>
+<tr><td valign="top"><a href="#getHoja-1">getHoja/1</a></td><td>Devuelve el valor de hoja del nodo.</td></tr>
+<tr><td valign="top"><a href="#imprimir-1">imprimir/1</a></td><td>Metodo de la clase nodo que devuelve el string con el arbol parentizado.</td></tr>
+<tr><td valign="top"><a href="#nodoClase-4">nodoClase/4</a></td><td>Metodo interno de la clase, se exporta para igualar la construccion a java.</td></tr>
+<tr><td valign="top"><a href="#setDatos-2">setDatos/2</a></td><td>Metodo setter de datos.</td></tr>
+<tr><td valign="top"><a href="#setHoja-1">setHoja/1</a></td><td>Comprueba si el nodo con pid Nodo es hoja.</td></tr>
+<tr><td valign="top"><a href="#start-0">start/0</a></td><td>Constructor vacio, no se usa.</td></tr>
+<tr><td valign="top"><a href="#start-2">start/2</a></td><td>Inicializa un proceso nodo, es decir un objeto de la clase nodo.</td></tr>
+<tr><td valign="top"><a href="#stop-1">stop/1</a></td><td>Detiene todos los procesos nodos relacionados a ese pid.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="analizar-1">analizar/1</a></h3>
+<div class="spec">
+<p><tt>analizar(Nodo::pid()) -&gt; list()</tt><br></p>
+</div><p>Metodo de la clase nodo, que realiza la subdivisión en cuadrantes</p>
+
+<h3 class="function"><a name="descodificar-1">descodificar/1</a></h3>
+<div class="spec">
+<p><tt>descodificar(Nodo::pid()) -&gt; array()</tt><br></p>
+</div><p>Metodo de la clase nodo que devuelve un array con el arbol descodificado</p>
+
+<h3 class="function"><a name="getDatos-1">getDatos/1</a></h3>
+<div class="spec">
+<p><tt>getDatos(Nodo::pid()) -&gt; array()</tt><br></p>
+</div><p>Getter del valor de los datos del nodo Nodo</p>
+
+<h3 class="function"><a name="getHoja-1">getHoja/1</a></h3>
+<div class="spec">
+<p><tt>getHoja(Nodo::pid()) -&gt; boolean()</tt><br></p>
+</div><p>Devuelve el valor de hoja del nodo</p>
+
+<h3 class="function"><a name="imprimir-1">imprimir/1</a></h3>
+<div class="spec">
+<p><tt>imprimir(Nodo::pid()) -&gt; list()</tt><br></p>
+</div><p>Metodo de la clase nodo que devuelve el string con el arbol parentizado</p>
+
+<h3 class="function"><a name="nodoClase-4">nodoClase/4</a></h3>
+<div class="spec">
+<p><tt>nodoClase(Datos, Hoja, Hijos, Dim) -&gt; any()</tt></p>
+</div><p>Metodo interno de la clase, se exporta para igualar la construccion a java</p>
+
+<h3 class="function"><a name="setDatos-2">setDatos/2</a></h3>
+<div class="spec">
+<p><tt>setDatos(Nodo::pid(), Datos::array()) -&gt; any()</tt><br></p>
+</div><p>Metodo setter de datos</p>
+
+<h3 class="function"><a name="setHoja-1">setHoja/1</a></h3>
+<div class="spec">
+<p><tt>setHoja(Nodo::pid()) -&gt; any()</tt><br></p>
+</div><p>Comprueba si el nodo con pid Nodo es hoja</p>
+
+<h3 class="function"><a name="start-0">start/0</a></h3>
+<div class="spec">
+<p><tt>start() -&gt; any()</tt></p>
+</div><p>Constructor vacio, no se usa</p>
+
+<h3 class="function"><a name="start-2">start/2</a></h3>
+<div class="spec">
+<p><tt>start(Datos::array(), Dim::integer()) -&gt; pid()</tt><br></p>
+</div><p>Inicializa un proceso nodo, es decir un objeto de la clase nodo</p>
+
+<h3 class="function"><a name="stop-1">stop/1</a></h3>
+<div class="spec">
+<p><tt>stop(Nodo::pid()) -&gt; atom()</tt><br></p>
+</div><p>Detiene todos los procesos nodos relacionados a ese pid</p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc, Oct 16 2015, 03:28:19.</i></p>
+</body>
+</html>

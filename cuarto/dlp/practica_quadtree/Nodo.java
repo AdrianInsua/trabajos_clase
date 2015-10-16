@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package quadtree;
+package DLP;
 
 import java.util.ArrayList;
 
@@ -15,9 +15,9 @@ public class Nodo {
     /*
         Declaración de variables
     */
-    Boolean hoja;
+    private Boolean hoja;
     private char datos[][];
-    private ArrayList<Nodo> hijos;
+    ArrayList<Nodo> hijos;
     private int dim;
     
     /*
@@ -44,6 +44,10 @@ public class Nodo {
         this.datos = datos;
     }
     
+    public void setDim(int dim){
+        this.dim = dim;
+    }
+    
     public void setHoja(){
         char control = this.datos[0][0];
         for (int i = 0; i < datos.length; i++) {
@@ -52,7 +56,7 @@ public class Nodo {
                 if(e != control){
                     this.hoja = false;
                     return;
-                } 
+                }
             }
         }
     }
@@ -65,30 +69,35 @@ public class Nodo {
         return this.hoja;
     }
     
+    public int getDim(){
+        return this.dim;
+    }
+    
     /*
         Funciones propias de clase
     */
-    public ArrayList<Nodo> analizar(int dimension){
+    public ArrayList<Nodo> analizar(){
         /*se recorren los datos en dos mitades segun la dimension
         esas mitades en dos mitades, y cada una ira a un cuadrante o hijo
         */
         String linea;
-        int sep = dimension/2;
+        int sep = this.dim/2;
         Nodo n1, n2, n3, n4;
         char datosHijoCuadranteUno[][] = new char[sep][sep];
         char datosHijoCuadranteDos[][] = new char[sep][sep];
         char datosHijoCuadranteTres[][] = new char[sep][sep];
         char datosHijoCuadranteCuatro[][] = new char[sep][sep];;
-            for (int i = 0; i < dimension; i++) {
-                for (int j = 0; j < dimension; j++) {
+            for (int i = 0; i < this.dim; i++) {
+                for (int j = 0; j < this.dim; j++) {
+                    char dato = this.datos[i][j];
                     if((j < sep) && (i< sep))
-                        datosHijoCuadranteUno[i][j] = this.datos[i][j];
+                        datosHijoCuadranteUno[i][j] = dato;
                     else if((j>= sep) && (i<sep))
-                        datosHijoCuadranteDos[i][j%sep] = this.datos[i][j];
+                        datosHijoCuadranteDos[i][j%sep] = dato;
                     else if((j<sep) && (i>=sep))
-                        datosHijoCuadranteTres[i%sep][j] = this.datos[i][j];
+                        datosHijoCuadranteTres[i%sep][j] = dato;
                     else if((j>=sep) && (i>=sep))
-                        datosHijoCuadranteCuatro[i%sep][j%sep] = this.datos[i][j];
+                        datosHijoCuadranteCuatro[i%sep][j%sep] = dato;
                 }
             }
             n1 = new Nodo(datosHijoCuadranteUno, sep);
@@ -106,6 +115,11 @@ public class Nodo {
             return this.hijos;
     }
     
+    /*
+        Funcion de imprimir de estilo recursivo
+            Se concatena el resultado de la funcion que resulte de los hijos del 
+            nodo actual
+    */
     public String imprimir(){
         String res = "(";
         if(this.hoja)
@@ -122,12 +136,14 @@ public class Nodo {
     }
     
     public char[][] decodificar(){
+        int sep = this.dim/2;
         char deco[][] = new char[this.dim][this.dim];
-        char pc[][] = new char[(this.dim)/2][(this.dim/2)];
-        char sc[][] = new char[(this.dim)/2][(this.dim/2)];
-        char tc[][] = new char[(this.dim)/2][(this.dim/2)];
-        char cc[][] = new char[(this.dim)/2][(this.dim/2)];
+        char pc[][] = new char[sep][sep];
+        char sc[][] = new char[sep][sep];
+        char tc[][] = new char[sep][sep];
+        char cc[][] = new char[sep][sep];
         if(this.hoja){
+            //si es hoja se compone el cuadrante necesario con el mismo dato
             for (int i = 0; i < this.dim; i++) {
                 for (int j = 0; j < this.dim; j++) {
                     deco[i][j] = this.datos[0][0];                    
@@ -138,6 +154,19 @@ public class Nodo {
             sc = this.hijos.get(1).decodificar();
             tc = this.hijos.get(2).decodificar();
             cc = this.hijos.get(3).decodificar();
+            //guardar datos en deco
+            for (int i = 0; i < this.dim; i++) {
+                for (int j = 0; j < this.dim; j++) {
+                    if(i<sep && j<sep)
+                        deco[i][j] = pc[i][j];
+                    if(i>=sep && j<sep)
+                        deco[i][j] = tc[i%sep][j];
+                    if(i<sep && j>=sep)
+                        deco[i][j] = sc[i][j%sep];
+                    if(i>=sep && j>=sep)
+                        deco[i][j] = cc[i%sep][j%sep];
+                }     
+            }
         }
         return deco;
     }
