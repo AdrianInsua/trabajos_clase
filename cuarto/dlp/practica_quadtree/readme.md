@@ -5,7 +5,7 @@ PRACTICA QUADTREE
 
 ###Contextualización
 
-Compilador: Netbeans So: Ubuntu 8.14
+Compilador: Netbeans So: Ubuntu 14.14
 
 Lenguaje usado: Java, lenguaje tipico de orientación a objetos que se puede ejecutar independientemente de la arquitectura de la maquina en la que se ejecute gracias al uso de su maquina virtual.
 
@@ -53,7 +53,7 @@ Como se puede apreciar se ha utilizado el metodo clone, para crear copias en otr
 
 ###Contextualización
 
-Version: erl v5.10.4 OS:ubuntu 8.14
+Version: erl v5.10.4 OS:ubuntu 14.14
 
 Erlang es un lenguaje funcional orientado a la concurrencia, muy usado en sistemas con alta escalibilidad y sistemas distribuidos, ya que la creación de procesos es muy sencilla en este lenguaje, además como caracteristicas importantes cabe destacar su tolerancia a fallos, y la posibilidad de realizar cambios de codigo en caliente, debido a esto es común su uso en aplicaciones de telefonía con un gran volumen de datos.
 
