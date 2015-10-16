@@ -115,13 +115,13 @@ nodoClase(Datos, Hoja, Hijos, Dim) ->
                     Cuad4 = spawn(?MODULE, nodoClase, [array:get(3,ArrayHijos), true, [], Sep]),
                     setHoja(Cuad4),
                     From ! {ok, [Cuad1,Cuad2,Cuad3,Cuad4]},
-                    nodoClase(Datos, Hoja, [Cuad1,Cuad2,Cuad3,Cuad4], Dim);
+                    nodoClase(nil, Hoja, [Cuad1,Cuad2,Cuad3,Cuad4], Dim);
                 true ->
                     From ! {error, fin_lista},
                     nodoClase(Datos, Hoja, Hijos, Dim)
             end;
          {imprimir, From} ->
-            Res = imprimirArbol(array:get(0,Datos), Hijos, Hoja),
+            Res = imprimirArbol(Datos, Hijos, Hoja),
             From ! Res,
             nodoClase(Datos, Hoja, Hijos,Dim);
          {descodificar, From} ->
@@ -152,7 +152,7 @@ sethoja(Inti,Intj,Dim,Datos,Control) ->
 %%Concatena la impresion del arbol parentizado
 imprimirArbol(Datos, Hijos, Hoja) ->
     case Hoja of
-        true -> Res = array:get(0,Datos);
+        true -> Res = array:get(0,array:get(0,Datos));
         false -> Res = "node"++ (lists:map(fun(X) -> imprimir(X) end, Hijos))
     end,
     lists:concat([[40],[Res],[41]]).

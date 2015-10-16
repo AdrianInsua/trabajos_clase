@@ -112,6 +112,7 @@ public class Nodo {
             n4 = new Nodo(datosHijoCuadranteCuatro, sep);
             n4.setHoja();
             this.hijos.add(n4);
+            if(!this.hoja) this.datos = null;
             return this.hijos;
     }
     
