@@ -6,6 +6,7 @@ PRACTICA QUADTREE
 ###Contextualización
 
 Compilador: Netbeans So: Ubuntu 8.14
+
 Lenguaje usado: Java, lenguaje tipico de orientación a objetos que se puede ejecutar independientemente de la arquitectura de la maquina en la que se ejecute gracias al uso de su maquina virtual.
 
 Java utiliza memoria heap donde se almacenan las variables creadas con `new(..)`, esta memoria es dinamica e irá creciendo según sea necesario, sin embargo la JVM dispone de un sistema de optimización que almacena variables que se ejecuten en un solo thread o metodo en la memoria stack. Además de esto java posee un garbage collector que va elminando las variables no usadas de la memoria heap.
@@ -41,12 +42,11 @@ El proceso de impresion de arbol parentizado se hace de forma "recursiva", y la 
 
 En el proceso de **codificación** realizado en el main, la igualcion de ArrayList asocia los datos en memoria, por lo que al borrarlos de la variable auxiliar se eliminan también en la original. A continuación se muestra un ejemplo del código afectado:
 ```
-            hijos = (ArrayList) quadTree.analizar().clone();
-            while (hijos.size() > 0) {
-                nuevosHijos.clear();
-            ....
+hijos = (ArrayList) quadTree.analizar().clone();
+      while (hijos.size() > 0) {
+          nuevosHijos.clear();
 ```
-}
+
 Como se puede apreciar se ha utilizado el metodo clone, para crear copias en otra posicion de memoria.
 
 ##ADAPTACIÓN EN ERLANG
