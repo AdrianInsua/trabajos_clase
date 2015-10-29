@@ -1,0 +1,28 @@
+\select@language {galician}
+\contentsline {section}{\numberline {1}Unha mala representaci\IeC {\'o}n arquitectural}{3}
+\contentsline {subsection}{\numberline {1.1}Vista est\IeC {\'a}tica}{3}
+\contentsline {subsubsection}{\numberline {1.1.1}Casos de uso}{3}
+\contentsline {subsubsection}{\numberline {1.1.2}Diagrama de clases}{4}
+\contentsline {subsection}{\numberline {1.2}Vista din\IeC {\'a}mica}{5}
+\contentsline {subsection}{\numberline {1.3}Vista de despregue}{6}
+\contentsline {section}{\numberline {2}Unha boa representaci\IeC {\'o}n arquitectural}{7}
+\contentsline {subsection}{\numberline {2.1}Vista est\IeC {\'a}tica}{7}
+\contentsline {subsubsection}{\numberline {2.1.1}Casos de uso}{7}
+\contentsline {subsubsection}{\numberline {2.1.2}Diagrama de clases}{8}
+\contentsline {subsection}{\numberline {2.2}Vista din\IeC {\'a}mica}{9}
+\contentsline {subsection}{\numberline {2.3}Vista de despregue}{10}
+\contentsline {section}{\numberline {3}Representaci\IeC {\'o}n arquitectural do sistema-anel}{10}
+\contentsline {subsection}{\numberline {3.1}Descomposici\IeC {\'o}n en m\IeC {\'o}dulos}{10}
+\contentsline {subsubsection}{\numberline {3.1.1}Casos de uso}{10}
+\contentsline {paragraph}{\nonumberline Iniciar Anel}{10}
+\contentsline {paragraph}{\nonumberline Enviar Mensaxe}{11}
+\contentsline {paragraph}{\nonumberline Obter Proceso}{11}
+\contentsline {paragraph}{\nonumberline Deter}{11}
+\contentsline {subsubsection}{\numberline {3.1.2}Diagrama de clases}{12}
+\contentsline {subsection}{\numberline {3.2}Descomposici\IeC {\'o}n en procesos}{12}
+\contentsline {subsubsection}{\numberline {3.2.1}Iniciar Anel}{13}
+\contentsline {subsubsection}{\numberline {3.2.2}Enviar Mensaxe}{14}
+\contentsline {subsubsection}{\numberline {3.2.3}Obter Proceso}{15}
+\contentsline {subsubsection}{\numberline {3.2.4}Deter}{16}
+\contentsline {subsection}{\numberline {3.3}Descomposici\IeC {\'o}n de despregue}{17}
+\contentsline {section}{\numberline {4}Bibliograf\IeC {\'\i }a}{17}
