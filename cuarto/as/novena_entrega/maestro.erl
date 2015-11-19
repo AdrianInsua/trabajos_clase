@@ -10,31 +10,27 @@ stop() ->
 	maestro ! stop.
 
 maestro() ->
-	maestro(nodes(), 0, 0).
-maestro(List, Time, Ocupados) ->
+	maestro(nodes(), 0).
+maestro(List, Ocupados) ->
 	receive
-		trabajo when length(List)>0->
-			{H,M,S} = time(),
-			{worker, lists:nth(1, List)} ! {trabajo, timer:hms(H,M,S),self()},
-			maestro(lists:nthtail(1,List),Time,Ocupados+1);
-		trabajo ->
-			{worker, lists:nth(1, List)} ! {trabajo,self()},
+		{trabajo,From} when length(List)>0->
+			{worker, lists:nth(1, List)} ! trabajo,
+			From ! ok,
+			maestro(lists:nthtail(1,List),Ocupados+1);
+		{trabajo,From} ->
 			receive
-				{libre,Time,Nodo} ->
-					{H,M,S} = time(),
-					Tf = timer:hms(H,M,S) - Time,
-					{worker,Nodo} ! {trabajo,timer:hms(H,M,S),self()}
-			end,
-			maestro(List, Time+Tf, Ocupados);
-		{libre,Time,Nodo} ->
-			{H,M,S} = time(),
-			Tf = timer:hms(H,M,S) - Time,
-			maestro(lists:append(Nodo, List), Time+Tf, Ocupados-1);
+				{libre,Node} ->
+					{worker,Node} ! trabajo,
+					From ! ok,
+					maestro(List, Ocupados)
+			end;
+		{libre,Nodo} ->
+			maestro(lists:append([Nodo], List),Ocupados-1);
 		{tiempo, From} when Ocupados > 0->
 			From ! activo,
-			maestro(List,Time,Ocupados);
-		{timepo,From} ->
-			From ! Time,
-			maestro(List,Time,Ocupados);
+			maestro(List,Ocupados);
+		{tiempo,From} ->
+			From ! ok,
+			maestro(List,Ocupados);
 		stop -> unregister(maestro)
 	end.

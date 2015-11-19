@@ -11,9 +11,9 @@ stop() ->
 
 worker() ->
 	receive
-		{trabajo, Time, From} ->
+		trabajo ->
 			timer:sleep(trunc(timer:seconds(random:uniform()/1000))),
-			From ! {libre,Time, node()},
+			{maestro, cliente@suampa} ! {libre,node()},
 			worker();
 		stop -> unregister(worker)
 	end.

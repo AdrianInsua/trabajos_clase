@@ -12,7 +12,8 @@ stop() ->
 cliente() ->
 	receive
 		{trabajo, N, From} ->
-			{estacion, lists:nth((N rem 4)+1, nodes())} ! {trabajar, self()},
+			I = N rem length(nodes()),
+			{estacion, lists:nth(I+1, nodes())} ! {trabajar, N, self()},
 			receive
 				ok -> From ! ok
 			end,

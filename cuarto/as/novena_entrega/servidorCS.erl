@@ -13,7 +13,8 @@ server() ->
 server(Lista) ->
 	receive
 		{balanceo,N,From} -> 
-			lists:nth((N rem 3)+1,Lista) ! {trabajo, self()},
+			I = N rem length(Lista),
+			{servidor,lists:nth(I+1,Lista)} ! {trabajo, self()},
 			receive
 				ok -> From ! ok
 			end,
